@@ -1,1 +1,2 @@
-# Szkript_nyelvek
+# Szkript nyelvek tárgy
+## Labor + beadandó
