@@ -82,7 +82,7 @@ def beleptetes():
         print("Nincs ilyen felhasználó, kérem regisztráljon!")
         ok_regisztracio = False
     i = 1
-    while jelszo  != "":
+    while jelszo != "":
         if jelszo_ellenorzese(jelszo, "Kérem a jelszót: "):
             break
         i += 1
@@ -102,11 +102,9 @@ def jelszo_gegeneralas(hossz, nagybetu, kisbetu, szam):
         karakterek = karakterek + string.ascii_lowercase
     if szam:
         karakterek = karakterek + string.digits
-
     jelszo = ""
     for _ in range(hossz):
         jelszo = jelszo + karakterek[random.randint(0, len(karakterek)-1)]
-
     return jelszo
 
 # Innen indul a program
