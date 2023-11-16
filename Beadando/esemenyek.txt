@@ -1,6 +1,2 @@
-10/30/23 - ez egy hétfõ
-10/31/23 - keddi nap
-11/1/23 - szerda
-11/2/23 - Thuesday
-12/1/23 - az év utolsó honapja
-1/1/24 - olimpiai év elsõ napja
+12/31/23 - az év utolsó napja
+1/1/24 - az év elsõ napja

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import scrolledtext
 from tkcalendar import Calendar
 import os
+from tkinter import messagebox
 
 class Naptar:
     def __init__(self, main_window):
@@ -29,15 +30,24 @@ class Naptar:
 
         # Események megtekintése - gomb
         self.megtekintes_gomb = tk.Button(main_window, text="Események megtekintése(adott nap)", command=self.view_event)
-        self.megtekintes_gomb.place(relx=0.5, rely=0.66, anchor="center")
+        self.megtekintes_gomb.place(relx=0.5, rely=0.62, anchor="center")
 
         # Mentés - gomb
         self.mentes_gomb = tk.Button(main_window, text="Esemény mentése", command=self.save_event)
-        self.mentes_gomb.place(relx=0.5, rely=0.72, anchor="center")
+        self.mentes_gomb.place(relx=0.5, rely=0.68, anchor="center")
 
         # Törlés - gomb
         self.torles_gomb = tk.Button(main_window, text="Események törlése", command=self.delete_events)
-        self.torles_gomb.place(relx=0.5, rely=0.78, anchor="center")
+        self.torles_gomb.place(relx=0.5, rely=0.74, anchor="center")
+
+        # Összes esemény listázása - gomb
+        self.osszes_gomb = tk.Button(main_window, text="Összes esemény listázása", command=self.list_all_events)
+        self.osszes_gomb.place(relx=0.28, rely=0.84, anchor="center")
+
+        # Összes esemény törlése - gomb
+        self.osszes_torles_gomb = tk.Button(main_window, text="Összes esemény törlése", command=self.delete_all_events)
+        self.osszes_torles_gomb.place(relx=0.72, rely=0.84, anchor="center")
+
         self.load_events()
 
     def save_event(self):
@@ -71,6 +81,17 @@ class Naptar:
             self.show_info_with_timeout("Törlés", "Az összes esemény törölve az adott napon.")
         else:
             self.show_warning_with_timeout("Nincs esemény", "Nincs elmentett esemény az adott napon.")
+
+    def delete_all_events(self):
+        result = messagebox.askquestion("Törlés megerősítése", "Biztosan törölni szeretnéd az összes eseményt?")
+        if result == 'yes':
+            # Itt írd meg a törlés műveletét
+            with open("esemenyek.txt", "w") as file:
+                file.write("")
+            self.event_data = {}  # Opcionális: Az esemény adatok törlése a memóriából is
+            self.show_info_with_timeout("Összes törölve", "Az összes esemény sikeresen törölve.")
+        else:
+            self.show_info_with_timeout("Művelet megszakítva", "Az összes esemény törlése megszakítva.")
 
     def load_events(self):
         file_path = "esemenyek.txt"
@@ -116,15 +137,30 @@ class Naptar:
         else:
             self.show_warning_with_timeout("Nincs esemény", "Nincs elmentett esemény az adott napon.")
 
-    def show_info_with_timeout(self, title, message, timeout=2500):
+    def list_all_events(self):
+        file_path = "esemenyek.txt"
+        try:
+            with open(file_path, "r") as file:
+                lines = file.readlines()
+                all_events = "\n".join(lines)
+                if all_events:
+                    self.show_info_with_timeout("Összes esemény", all_events, wait_close=True)
+                else:
+                    self.show_warning_with_timeout("Nincs esemény", "Nincsenek elmentett események.")
+        except FileNotFoundError:
+            self.show_warning_with_timeout("HIBA", "A fájl nem található")
+
+    def show_info_with_timeout(self, title, message, timeout=2500, wait_close=False):
         info_window = tk.Toplevel(self.ablak)
         info_window.title(title)
-        info_window.geometry("300x100")
+        info_window.geometry("300x300")
         x = self.ablak.winfo_x() + (self.ablak.winfo_width() / 2) - (300 / 2)
-        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (100 / 2)
-        info_window.geometry(f"300x100+{int(x)}+{int(y)}")
-        tk.Label(info_window, text=message).pack()
-        self.ablak.after(timeout, info_window.destroy)
+        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (300 / 2)
+        info_window.geometry(f"300x300+{int(x)}+{int(y)}")
+        tk.Label(info_window, text=message, wraplength=250).pack()
+
+        if not wait_close:
+            self.ablak.after(timeout, info_window.destroy)
 
     def show_warning_with_timeout(self, title, message, timeout=2500):
         warning_window = tk.Toplevel(self.ablak)
