@@ -28,11 +28,11 @@ class Naptar:
         self.event_desc_msbox.place(relx=0.5, rely=0.48, anchor="center")
 
         # Események megtekintése - gomb
-        self.megtekintes_gomb = tk.Button(main_window, text="Események megtekintése", command=self.view_event)
+        self.megtekintes_gomb = tk.Button(main_window, text="Események megtekintése(adott nap)", command=self.view_event)
         self.megtekintes_gomb.place(relx=0.5, rely=0.66, anchor="center")
 
         # Mentés - gomb
-        self.mentes_gomb = tk.Button(main_window, text="Mentés", command=self.save_event)
+        self.mentes_gomb = tk.Button(main_window, text="Esemény mentése", command=self.save_event)
         self.mentes_gomb.place(relx=0.5, rely=0.72, anchor="center")
 
         # Törlés - gomb
