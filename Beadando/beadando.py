@@ -38,7 +38,6 @@ class Naptar:
         # Törlés - gomb
         self.torles_gomb = tk.Button(main_window, text="Események törlése", command=self.delete_events)
         self.torles_gomb.place(relx=0.5, rely=0.78, anchor="center")
-
         self.load_events()
 
     def save_event(self):
