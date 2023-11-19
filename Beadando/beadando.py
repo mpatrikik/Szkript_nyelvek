@@ -37,7 +37,7 @@ class Naptar:
         self.mentes_gomb.place(relx=0.5, rely=0.68, anchor="center")
 
         # Törlés - gomb
-        self.torles_gomb = tk.Button(main_window, text="Események törlése", command=self.delete_events)
+        self.torles_gomb = tk.Button(main_window, text="Esemény törlése", command=self.delete_event)
         self.torles_gomb.place(relx=0.5, rely=0.74, anchor="center")
 
         # Összes esemény listázása - gomb
@@ -67,7 +67,7 @@ class Naptar:
             self.show_warning_with_timeout("Figyelem", "Az esemény leírása nem lehet üres a mentéshez.")
         self.event_desc_msbox.delete("1.0", tk.END)
 
-    def delete_events(self):
+    def delete_event(self):
         selected_date = self.naptar.get_date()
         formatted_date = selected_date
         if formatted_date in self.event_data:
@@ -85,18 +85,16 @@ class Naptar:
     def delete_all_events(self):
         result = messagebox.askquestion("Törlés megerősítése", "Biztosan törölni szeretnéd az összes eseményt?")
         if result == 'yes':
-            # Itt írd meg a törlés műveletét
             with open("esemenyek.txt", "w") as file:
                 file.write("")
-            self.event_data = {}  # Opcionális: Az esemény adatok törlése a memóriából is
+            self.event_data = {}  # Opcionális -> az esemény adatok törlődnek a memóriából is
             self.show_info_with_timeout("Összes törölve", "Az összes esemény sikeresen törölve.")
         else:
             self.show_info_with_timeout("Művelet megszakítva", "Az összes esemény törlése megszakítva.")
 
     def load_events(self):
         file_path = "esemenyek.txt"
-        if not os.path.exists(file_path):
-            # Ha a fájl nem létezik, létrehozzuk
+        if not os.path.exists(file_path): # Ha a fájl nem létezik, létrehozzuk
             with open(file_path, "w") as file:
                 self.show_warning_with_timeout("Fájl nem létezett", "A fájl nem létezett, de létrehoztuk!")
         try:
@@ -158,7 +156,6 @@ class Naptar:
         y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (300 / 2)
         info_window.geometry(f"300x300+{int(x)}+{int(y)}")
         tk.Label(info_window, text=message, wraplength=250).pack()
-
         if not wait_close:
             self.ablak.after(timeout, info_window.destroy)
 
