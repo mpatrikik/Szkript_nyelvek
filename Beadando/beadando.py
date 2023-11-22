@@ -10,6 +10,7 @@ class Naptar:
         self.ablak.title("Naptár")
         self.ablak.geometry("350x500")  # A naptár alkalmazás mérete
 
+        # Fő ablak méretezése és középre igazítása
         window_width = 350
         window_height = 500
         screen_width = self.ablak.winfo_screenwidth()
@@ -59,7 +60,6 @@ class Naptar:
                 self.event_data[formatted_date].append(event_description)
             else:
                 self.event_data[formatted_date] = [event_description]
-
             with open("esemenyek.txt", mode="a") as file:
                 file.write(f"{formatted_date} - {event_description}\n")
             self.show_info_with_timeout("Mentés", "Az esemény sikeresen elmentve a fájlba.")
@@ -67,7 +67,7 @@ class Naptar:
             self.show_warning_with_timeout("Figyelem", "Az esemény leírása nem lehet üres a mentéshez.")
         self.event_desc_msbox.delete("1.0", tk.END)
 
-    def delete_event(self):
+    def delete_an_event(self):
         selected_date = self.naptar.get_date()
         formatted_date = selected_date
         if formatted_date in self.event_data:
@@ -83,8 +83,8 @@ class Naptar:
             self.show_warning_with_timeout("Nincs esemény", "Nincs elmentett esemény az adott napon.")
 
     def delete_all_events(self):
-        result = messagebox.askquestion("Törlés megerősítése", "Biztosan törölni szeretnéd az összes eseményt?")
-        if result == 'yes':
+        answer = messagebox.askquestion("Törlés megerősítése", "Biztosan törölni szeretnéd az összes eseményt?")
+        if answer == 'yes':
             with open("esemenyek.txt", "w") as file:
                 file.write("")
             self.event_data = {}  # Opcionális -> az esemény adatok törlődnek a memóriából is
@@ -112,7 +112,7 @@ class Naptar:
             self.show_warning_with_timeout("HIBA", "A fájlt valamiért nem lehet létrehozni")
             pass
 
-    def view_event(self):
+    def view_an_event(self):
         selected_date = self.naptar.get_date()
         formatted_date = selected_date
         events = self.event_data.get(formatted_date, [])
@@ -151,10 +151,10 @@ class Naptar:
     def show_info_with_timeout(self, title, message, timeout=2500, wait_close=False):
         info_window = tk.Toplevel(self.ablak)
         info_window.title(title)
-        info_window.geometry("300x300")
+        info_window.geometry("300x100")
         x = self.ablak.winfo_x() + (self.ablak.winfo_width() / 2) - (300 / 2)
-        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (300 / 2)
-        info_window.geometry(f"300x300+{int(x)}+{int(y)}")
+        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (100 / 2)
+        info_window.geometry(f"300x100+{int(x)}+{int(y)}")
         tk.Label(info_window, text=message, wraplength=250).pack()
         if not wait_close:
             self.ablak.after(timeout, info_window.destroy)
