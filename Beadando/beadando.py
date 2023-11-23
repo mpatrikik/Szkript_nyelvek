@@ -30,7 +30,7 @@ class Naptar:
         self.event_desc_msbox.place(relx=0.5, rely=0.48, anchor="center")
 
         # Események megtekintése - gomb
-        self.megtekintes_gomb = tk.Button(main_window, text="Események megtekintése(adott nap)", command=self.view_event)
+        self.megtekintes_gomb = tk.Button(main_window, text="Események megtekintése(adott nap)", command=self.view_an_event)
         self.megtekintes_gomb.place(relx=0.5, rely=0.62, anchor="center")
 
         # Mentés - gomb
@@ -38,7 +38,7 @@ class Naptar:
         self.mentes_gomb.place(relx=0.5, rely=0.68, anchor="center")
 
         # Törlés - gomb
-        self.torles_gomb = tk.Button(main_window, text="Esemény törlése", command=self.delete_event)
+        self.torles_gomb = tk.Button(main_window, text="Esemény törlése", command=self.delete_an_event)
         self.torles_gomb.place(relx=0.5, rely=0.74, anchor="center")
 
         # Összes esemény listázása - gomb
@@ -151,10 +151,10 @@ class Naptar:
     def show_info_with_timeout(self, title, message, timeout=2500, wait_close=False):
         info_window = tk.Toplevel(self.ablak)
         info_window.title(title)
-        info_window.geometry("300x100")
+        info_window.geometry("300x300")
         x = self.ablak.winfo_x() + (self.ablak.winfo_width() / 2) - (300 / 2)
-        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (100 / 2)
-        info_window.geometry(f"300x100+{int(x)}+{int(y)}")
+        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (300 / 2)
+        info_window.geometry(f"300x300+{int(x)}+{int(y)}")
         tk.Label(info_window, text=message, wraplength=250).pack()
         if not wait_close:
             self.ablak.after(timeout, info_window.destroy)
@@ -162,10 +162,10 @@ class Naptar:
     def show_warning_with_timeout(self, title, message, timeout=2500):
         warning_window = tk.Toplevel(self.ablak)
         warning_window.title(title)
-        warning_window.geometry("300x100")
+        warning_window.geometry("300x300")
         x = self.ablak.winfo_x() + (self.ablak.winfo_width() / 2) - (300 / 2)
-        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (100 / 2)
-        warning_window.geometry(f"300x100+{int(x)}+{int(y)}")
+        y = self.ablak.winfo_y() + (self.ablak.winfo_height() / 2) - (300 / 2)
+        warning_window.geometry(f"300x300+{int(x)}+{int(y)}")
         tk.Label(warning_window, text=message).pack()
         self.ablak.after(timeout, warning_window.destroy)
 
